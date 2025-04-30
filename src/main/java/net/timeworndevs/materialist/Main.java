@@ -1,5 +1,6 @@
 package net.timeworndevs.materialist;
 
+import net.timeworndevs.materialist.common.MaterialistRegistries;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -22,13 +23,15 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 @Mod(Main.MODID)
 public class Main {
     public static final String MODID = "materialist";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
-
+        MaterialistRegistries.ITEM_REGISTRY.register(modEventBus);
+        MaterialistRegistries.BLOCK_REGISTRY.register(modEventBus);
+        MaterialistRegistries.registries();
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
